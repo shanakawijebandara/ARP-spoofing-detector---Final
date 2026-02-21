@@ -1,0 +1,21 @@
+# =============================================================================
+#  requirements.txt  –  Python dependencies
+#  Project: ARP Spoofing Detection Tool  |  PUSL3190
+#  Author : Angam Wijebandara  |  Plymouth ID: 10954873
+# =============================================================================
+#
+#  Install all dependencies with:
+#      pip install -r requirements.txt
+#
+#  On Windows you ALSO need Npcap (not a pip package):
+#      https://npcap.com → download installer
+#      During install: tick "Install Npcap in WinPcap API-compatible Mode"
+#
+#  Run the app (Windows – elevated terminal):
+#      python main.py
+#
+#  Run the app (Linux / macOS):
+#      sudo python3 main.py
+# =============================================================================
+
+scapy>=2.5.0
