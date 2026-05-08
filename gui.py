@@ -488,15 +488,6 @@ class ARPDetectorGUI:
 
         _sep_v(row)
 
-        # ── Simulate Attack ───────────────────────────────────────────────
-        sg2 = self._vcenter(row)
-        self._btn_sim = Btn(sg2, "  ⚡  Simulate Attack  ", self._on_simulate,
-                             fg=AMBER, bg=BG2, border=AMBER,
-                             active_bg="#241a08", padx=14, pady=6)
-        self._btn_sim.pack(side=tk.LEFT)
-
-        _sep_v(row)
-
         # ── Right side: sound + reset ────────────────────────────────────
         rg = self._vcenter(row)
 
@@ -898,16 +889,6 @@ class ARPDetectorGUI:
                 {"packets": 0, "devices": 0, "alerts": 0, "uptime": "00:00:00"})
             self._draw_chart()
             self._log_append("Session data cleared.", "warn")
-
-    def _on_simulate(self):
-        if not self.detector.known_hosts:
-            messagebox.showwarning(
-                "No Devices",
-                "Please run a Network Scan first so the tool\n"
-                "has devices to simulate the attack against.")
-            return
-        self.detector.simulate_attack()
-        self._log_append("[SIMULATION] Fake ARP spoofing attack injected!", "warn")
 
     def _toggle_sound(self, _e=None):
         self._sound_var.set(not self._sound_var.get())
